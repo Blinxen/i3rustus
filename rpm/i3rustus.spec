@@ -3,7 +3,7 @@
 
 Name:           i3rustus
 Version:        0.3.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Lightweight implementation of i3status in rust
 # Apache-2.0 OR BSL-1.0
 # Apache-2.0 OR MIT
@@ -45,6 +45,8 @@ Lightweight implementation of i3status in rust
 %endif
 
 %changelog
+* Tue Sep 10 2024 blinxen <h-k-81@hotmail.com> - 0.3.0-2
+- Rebuild
 * Sat Mar 02 2024 blinxen <h-k-81@hotmail.com> - 0.3.0-1
 - Update to version 0.3.0
 - Use netlink instead of NetworkManager dbus to get network information
