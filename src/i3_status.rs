@@ -48,29 +48,29 @@ impl I3Status {
         let mut values = json!([]);
         // Make sure widgets are printed in the correct order
         for widget_name in CONFIG.widget_order().iter() {
-            match self
-                .widget_executors
-                .get(widget_name)
-                .expect("ERROR: Unknown widget name")
-                .send(WidgetValue {})
-                .await
-            {
-                Ok(Ok(conf)) => values
-                    .as_array_mut()
-                    .expect("ERROR: Could not get a mutable Vec from serde JSON")
-                    .push(conf),
-                Ok(Err(error)) => {
-                    log::warn!("Invalid value for {}: \n\t{}", widget_name, error);
-                    continue;
-                }
-                _ => {
-                    log::error!(
-                        "Unexpected error when trying to get the value of {}!",
-                        widget_name
-                    );
-                    continue;
-                }
-            };
+            if self.widget_executors.contains_key(widget_name) {
+                match self
+                    .widget_executors[widget_name]
+                    .send(WidgetValue {})
+                    .await
+                {
+                    Ok(Ok(conf)) => values
+                        .as_array_mut()
+                        .expect("ERROR: Could not get a mutable Vec from serde JSON")
+                        .push(conf),
+                    Ok(Err(error)) => {
+                        log::warn!("Invalid value for {}: \n\t{}", widget_name, error);
+                        continue;
+                    }
+                    _ => {
+                        log::error!(
+                            "Unexpected error when trying to get the value of {}!",
+                            widget_name
+                        );
+                        continue;
+                    }
+                };
+            }
         }
 
         values
