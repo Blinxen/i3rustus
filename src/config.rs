@@ -40,4 +40,8 @@ impl Config {
             String::from("time"),
         ]
     }
+
+    pub fn timezone(&self) -> &str {
+        "/etc/localtime"
+    }
 }

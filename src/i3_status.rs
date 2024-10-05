@@ -49,8 +49,7 @@ impl I3Status {
         // Make sure widgets are printed in the correct order
         for widget_name in CONFIG.widget_order().iter() {
             if self.widget_executors.contains_key(widget_name) {
-                match self
-                    .widget_executors[widget_name]
+                match self.widget_executors[widget_name]
                     .send(WidgetValue {})
                     .await
                 {

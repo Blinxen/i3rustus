@@ -6,10 +6,14 @@ pub struct WalkingVec {
 
 impl WalkingVec {
     pub fn walk(&mut self, bytes_num: usize) -> &[u8] {
-        let ret = &self.buffer[self.position..self.position + bytes_num];
-        self.position += bytes_num;
+        if self.reached_end() {
+            &self.buffer[self.position..]
+        } else {
+            let ret = &self.buffer[self.position..self.position + bytes_num];
+            self.position += bytes_num;
 
-        ret
+            ret
+        }
     }
 
     pub fn reached_end(&self) -> bool {
